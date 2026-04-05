@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para Meu Amor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #fff0f5 0%, #ffe4ec 40%, #fff7fa 100%);
+      color: #5c2140;
+      overflow-x: hidden;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 24px;
+      position: relative;
+    }
+
+    .heart-bg {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 22px;
+      opacity: 0.12;
+      animation: floatHeart linear infinite;
+    }
+
+    @keyframes floatHeart {
+      from {
+        transform: translateY(40px);
+      }
+      to {
+        transform: translateY(-120vh);
+      }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      padding: 32px 24px;
+      border-radius: 28px;
+      box-shadow: 0 18px 45px rgba(166, 74, 116, 0.18);
+      max-width: 700px;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      margin-bottom: 16px;
+      color: #c2185b;
+    }
+
+    h4 {
+      font-family: cursive;
+      text-align: left;
+    }
+
+    h5 {
+      font-family:'Great Vibes', cursive ;
+      font-size: 1.3rem;
+      text-align: left;
+    }
+
+    h6 {
+      font-size: large;
+      text-shadow: 1px 1px 1px #865219;
+    }
+
+    .love-lines {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: all 0.9s ease;
+      margin-top: 18px;
+    }
+
+    .love-lines.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .love-lines p {
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: bold;
+      margin: 12px 0;
+      color: #8e244d;
+    }
+
+    .cta {
+      border: none;
+      background: linear-gradient(135deg, #ff5fa2, #ff89bb);
+      color: white;
+      padding: 16px 34px;
+      border-radius: 999px;
+      font-size: 1.15rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(255, 95, 162, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cta:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 16px 30px rgba(255, 95, 162, 0.45);
+    }
+
+    .hint {
+      margin-top: 16px;
+      font-size: 0.95rem;
+      color: #8d5770;
+    }
+
+    .scroll-indicator {
+      margin-top: 26px;
+      font-size: 0.95rem;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .scroll-indicator.show {
+      opacity: 1;
+    }
+
+    .gallery-section {
+      padding: 80px 20px 100px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .gallery-title {
+      text-align: center;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      margin-bottom: 14px;
+      color: #c2185b;
+    }
+
+    .gallery-subtitle {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 36px;
+      color: #7b4860;
+      font-size: 1rem;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .photo-card {
+      background: white;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 12px 26px rgba(129, 62, 90, 0.12);
+      transform: translateY(40px);
+      opacity: 0;
+      transition: all 0.8s ease;
+    }
+
+    .photo-card.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-caption {
+      padding: 14px 16px;
+      text-align: center;
+      color: #7a3958;
+      font-weight: 600;
+    }
+
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 18px;
+      top: -20px;
+      border-radius: 3px;
+      pointer-events: none;
+      z-index: 9999;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px 50px;
+      color: #8d5770;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="heart-bg" id="heartBg"></div>
+
+    <div class="card">
+      <button class="cta" id="loveButton">Clique aqui</button>
+
+      <div class="love-lines" id="loveLines">
+        <h1>Eu te amo muito ❤️</h1>
+        <p>Você é tudo para mim</p>
+      </div>
+
+      <div class="scroll-indicator" id="scrollIndicator">Role para baixo para ver nossas fotos ✨</div>
+      <p class="hint">Você é tudo que eu sempre sonhei</p>
+    </div>
+  </section>
+
+  <section class="gallery-section">
+    <h2 class="gallery-title">Nossos momentos</h2>
+
+    <div class="photo-grid">
+      <div class="photo-card reveal">
+        <img src="IMG_7028-2.jpg" alt="Foto do casal 1">
+        <div class="photo-caption">Nosso sorriso juntos</div>
+      </div>
+
+      <div class="photo-card reveal">
+        <img src="7E19C0A0-8FC8-47B7-AF00-6B779D9C23AC-2.jpg" alt="Foto do casal 2">
+        <div class="photo-caption">Momentos inesquecíveis</div>
+      </div>
+
+      <div class="photo-card reveal">
+        <img src="IMG_8811-2.jpg" alt="Foto do casal 3">
+        <div class="photo-caption">Cada instante com você</div>
+      </div>
+
+      <div class="photo-card reveal">
+        <img src="IMG_6906-2.jpg" alt="Foto do casal 4">
+        <div class="photo-caption">Meu lugar favorito</div>
+      </div>
+
+      <div class="photo-card reveal">
+        <img src="IMG_7421-2.jpg" alt="Foto do casal 5">
+        <div class="photo-caption">Você e eu 💖</div>
+      </div>
+
+      <div class="photo-card reveal">
+        <img src="IMG_0045.JPG" alt="Foto do casal 6">
+        <div class="photo-caption">Para sempre nós</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <h6><p>Feliz 1 ano de namoro para nós meu amorrr!!!</p></h6>
+     ­
+    <p>Feito especialmente para o amor da minha vida.</p>
+     <p>Eu te amo e sempre te amarei meu amor</p>
+     <p>Você é tudo na minha vida</p>
+     <p>Eu sou extremamente feliz por ter você como minha namorada</p>
+     <p>Essa mulher incrivel, maravilhosa que eu tenho tanto orgulho</p>
+     <p>Primeiro ano de namoro de muitos que vem pela frente,</p>
+     <p>junto com os nossos anos de casados amor.</p>
+     <p>Eu quero e sempre vou estar ao seu lado meu amor,</p>
+     <p>por que eu te amo minha vida, você me faz um bem danado meu amor.</p>
+     <p>Eu sei que as vezes posso vacilar, as vezes temos situações que</p>
+     <p>ficamos tristes, momentos que rimos, que sorrimos para tudo.</p>
+     <p>Momentos dificeis, momentos de gloria. Mas eu quero que você saiba</p>
+     <p>que todos esses momentos independente de qual for a situação eu sempre</p>
+     <p>quero passar ao seu lado.</p>
+     <p>A vida pode ser dificil as vezes mas é por mim, por você e por nós que eu</p>
+     <p>sempre vou batalhar para viver o nosso melhor.</p>
+     <p>Sei que eu estava em momentos dificeis na faculdade que não tava aguentando</p>
+     <p>mas quando pensava em desistir pensava em nós, e em tudo que vamos viver</p>
+     <p>depois que a faculdade passar, você me ajudou a reconhecer que para todas</p>
+     <p>as nossas glorias sempre irá ter momentos de luta, de batalha, de dias que</p>
+     <p>pensamos em desistir do processo, mas que sempre devemos manter a cabeça erguida</p>
+     <p>e nunca desistir, e é por nós que eu batalho, que vou enfrentar esse periodo</p>
+     <p>com a cabeça mais que erguida e sempre enfrentar as dificuldades da vida.</p>
+     <p>Quero que saiba que este ano foi o melhor ano da minha vida, pois tive você</p>
+     <p>ao meu lado a todo momento, e sei que irá ter mais muitos e muitos anos assim</p>
+     <p>pela frente, pois você é a mulher da minha vida, a mulher que eu escolhi passar o</p>
+     <p>resto da minha eternidade juntos.</p>
+     <p>Peço a Deus que sempre nos abençoe e que nos guie em nossa jornada</p>
+     <p>e que Deus possa nos conceder sua benção e um dia, possamos nos reunir</p>
+     <p>em matrimonio em seu Santo Nome.</p>
+     <p>Eu te amo com todas minhas forças meu amor.</p>
+     <p>Obrigado por tudo minha vida, você é uma namorada maravilhosa.</p>
+     <p>Eu sempre vou querer você na minha vida.</p>
+     <p>Você sempre irá ser minha escolha.</p>
+     <p>Tão intensa quanto o Sol</p>
+     <p>Mais valiosa que todo ouro</p>
+     <p>Mais brilhante que qualquer diamante mais lapidado</p>
+     <p>Tu és meu amor, uma obra de arte</p>
+     <p>O meu amor de toda minha existencia e além </p>
+     <p>Tu és minha cara metade, contigo nunca me sentirei sozinho.</p>
+     ­
+     <h4>Com todo amor</h4>
+     <h5>João Pedro Sampaio Barroso</h5>
+     <h4>Para o amor da minha vida</h4>
+     <h5>Maria Grazielly Carlos de Medeiros</h5>
+
+
+  </footer>
+
+  <script>
+    const loveButton = document.getElementById('loveButton');
+    const loveLines = document.getElementById('loveLines');
+    const scrollIndicator = document.getElementById('scrollIndicator');
+    const heartBg = document.getElementById('heartBg');
+
+    function createFloatingHearts() {
+      for (let i = 0; i < 18; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.textContent = '❤';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = Math.random() * 100 + 'vh';
+        heart.style.animationDuration = (8 + Math.random() * 8) + 's';
+        heart.style.fontSize = (16 + Math.random() * 22) + 'px';
+        heartBg.appendChild(heart);
+      }
+    }
+
+    function launchConfetti() {
+      const colors = ['#ff4d6d', '#ff85a1', '#ffd166', '#7bdff2', '#b8f2e6', '#c77dff'];
+
+      for (let i = 0; i < 180; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDuration = (2.5 + Math.random() * 2.5) + 's';
+        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+        document.body.appendChild(confetti);
+
+        setTimeout(() => {
+          confetti.remove();
+        }, 5000);
+      }
+    }
+
+    loveButton.addEventListener('click', () => {
+      launchConfetti();
+      loveLines.classList.add('show');
+      scrollIndicator.classList.add('show');
+      loveButton.textContent = 'Você é meu amor ❤️';
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach((card) => observer.observe(card));
+
+    createFloatingHearts();
+  </script>
+</body>
+</html>
